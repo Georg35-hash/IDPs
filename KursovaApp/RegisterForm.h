@@ -1,0 +1,249 @@
+#pragma once
+#include <mysql_driver.h>
+#include <mysql_connection.h>
+#include <cppconn/prepared_statement.h>
+#include <cppconn/resultset.h>
+#include <msclr/marshal.h>
+#include <msclr/marshal_cppstd.h>
+#include <iostream>
+namespace KursovaApp {
+
+	using namespace System;
+	using namespace System::ComponentModel;
+	using namespace System::Collections;
+	using namespace System::Windows::Forms;
+	using namespace System::Data;
+	using namespace System::Drawing;
+
+	/// <summary>
+	/// Summary for RegisterForm
+	/// </summary>
+	public ref class RegisterForm : public System::Windows::Forms::Form
+	{
+	public:
+		RegisterForm(void)
+		{
+			InitializeComponent();
+			//
+			//TODO: Add the constructor code here
+			//
+		}
+
+	protected:
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		~RegisterForm()
+		{
+			if (components)
+			{
+				delete components;
+			}
+		}
+	private: System::Windows::Forms::Button^ btnRegister;
+	protected:
+	private: System::Windows::Forms::Label^ lblUserName;
+	private: System::Windows::Forms::TextBox^ txtUserName;
+	private: System::Windows::Forms::Label^ lblPassword;
+	private: System::Windows::Forms::TextBox^ txtPassword;
+	private: System::Windows::Forms::Button^ btnLogin;
+	private: System::Windows::Forms::Label^ lblConfirmPassword;
+	private: System::Windows::Forms::TextBox^ txtConfirmPassword;
+
+
+
+	private:
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		System::ComponentModel::Container ^components;
+
+#pragma region Windows Form Designer generated code
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		void InitializeComponent(void)
+		{
+			this->btnRegister = (gcnew System::Windows::Forms::Button());
+			this->lblUserName = (gcnew System::Windows::Forms::Label());
+			this->txtUserName = (gcnew System::Windows::Forms::TextBox());
+			this->lblPassword = (gcnew System::Windows::Forms::Label());
+			this->txtPassword = (gcnew System::Windows::Forms::TextBox());
+			this->btnLogin = (gcnew System::Windows::Forms::Button());
+			this->lblConfirmPassword = (gcnew System::Windows::Forms::Label());
+			this->txtConfirmPassword = (gcnew System::Windows::Forms::TextBox());
+			this->SuspendLayout();
+			// 
+			// btnRegister
+			// 
+			this->btnRegister->Location = System::Drawing::Point(210, 175);
+			this->btnRegister->Margin = System::Windows::Forms::Padding(4);
+			this->btnRegister->Name = L"btnRegister";
+			this->btnRegister->Size = System::Drawing::Size(159, 28);
+			this->btnRegister->TabIndex = 11;
+			this->btnRegister->Text = L"Registration";
+			this->btnRegister->UseVisualStyleBackColor = true;
+			this->btnRegister->Click += gcnew System::EventHandler(this, &RegisterForm::btnRegister_Click);
+			// 
+			// lblUserName
+			// 
+			this->lblUserName->Location = System::Drawing::Point(37, 23);
+			this->lblUserName->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			this->lblUserName->Name = L"lblUserName";
+			this->lblUserName->Size = System::Drawing::Size(133, 28);
+			this->lblUserName->TabIndex = 6;
+			this->lblUserName->Text = L"Username:";
+			this->lblUserName->Click += gcnew System::EventHandler(this, &RegisterForm::lblUserName_Click);
+			// 
+			// txtUserName
+			// 
+			this->txtUserName->Location = System::Drawing::Point(210, 23);
+			this->txtUserName->Margin = System::Windows::Forms::Padding(4);
+			this->txtUserName->Name = L"txtUserName";
+			this->txtUserName->Size = System::Drawing::Size(159, 22);
+			this->txtUserName->TabIndex = 7;
+			// 
+			// lblPassword
+			// 
+			this->lblPassword->Location = System::Drawing::Point(37, 72);
+			this->lblPassword->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			this->lblPassword->Name = L"lblPassword";
+			this->lblPassword->Size = System::Drawing::Size(133, 28);
+			this->lblPassword->TabIndex = 8;
+			this->lblPassword->Text = L"Password:";
+			// 
+			// txtPassword
+			// 
+			this->txtPassword->Location = System::Drawing::Point(210, 72);
+			this->txtPassword->Margin = System::Windows::Forms::Padding(4);
+			this->txtPassword->Name = L"txtPassword";
+			this->txtPassword->PasswordChar = '*';
+			this->txtPassword->Size = System::Drawing::Size(159, 22);
+			this->txtPassword->TabIndex = 9;
+			// 
+			// btnLogin
+			// 
+			this->btnLogin->Location = System::Drawing::Point(40, 175);
+			this->btnLogin->Margin = System::Windows::Forms::Padding(4);
+			this->btnLogin->Name = L"btnLogin";
+			this->btnLogin->Size = System::Drawing::Size(139, 28);
+			this->btnLogin->TabIndex = 10;
+			this->btnLogin->Text = L"Back";
+			this->btnLogin->UseVisualStyleBackColor = true;
+			this->btnLogin->Click += gcnew System::EventHandler(this, &RegisterForm::btnLogin_Click);
+			// 
+			// lblConfirmPassword
+			// 
+			this->lblConfirmPassword->Location = System::Drawing::Point(37, 123);
+			this->lblConfirmPassword->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			this->lblConfirmPassword->Name = L"lblConfirmPassword";
+			this->lblConfirmPassword->Size = System::Drawing::Size(133, 28);
+			this->lblConfirmPassword->TabIndex = 12;
+			this->lblConfirmPassword->Text = L"Confirm password:";
+			// 
+			// txtConfirmPassword
+			// 
+			this->txtConfirmPassword->Location = System::Drawing::Point(210, 123);
+			this->txtConfirmPassword->Margin = System::Windows::Forms::Padding(4);
+			this->txtConfirmPassword->Name = L"txtConfirmPassword";
+			this->txtConfirmPassword->PasswordChar = '*';
+			this->txtConfirmPassword->Size = System::Drawing::Size(159, 22);
+			this->txtConfirmPassword->TabIndex = 13;
+			// 
+			// RegisterForm
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(400, 230);
+			this->Controls->Add(this->lblConfirmPassword);
+			this->Controls->Add(this->txtConfirmPassword);
+			this->Controls->Add(this->btnRegister);
+			this->Controls->Add(this->lblUserName);
+			this->Controls->Add(this->txtUserName);
+			this->Controls->Add(this->lblPassword);
+			this->Controls->Add(this->txtPassword);
+			this->Controls->Add(this->btnLogin);
+			this->Name = L"RegisterForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+			this->Text = L"RegisterForm";
+			this->ResumeLayout(false);
+			this->PerformLayout();
+
+		}
+#pragma endregion
+	
+
+private: System::Void btnRegister_Click(System::Object^ sender, System::EventArgs^ e) {
+	String^ userName = txtUserName->Text;
+	String^ password = txtPassword->Text;
+	String^ confirmPassword = txtConfirmPassword->Text;
+
+	if (userName->Length == 0 || password->Length == 0 || confirmPassword->Length == 0) {
+		MessageBox::Show("Будь ласка, заповніть всі поля", "Помилка реєстрації", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	if (password != confirmPassword) {
+		MessageBox::Show("Паролі не співпадають", "Помилка реєстрації", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	try {
+		// Перетворення System::String^ у std::string для MySQL
+		std::string stdUserName = msclr::interop::marshal_as<std::string>(userName);
+		std::string stdPassword = msclr::interop::marshal_as<std::string>(password);
+
+		// Ініціалізація MySQL драйвера та з'єднання
+		sql::mysql::MySQL_Driver* driver;
+		sql::Connection* conn;
+
+		driver = sql::mysql::get_mysql_driver_instance();
+		conn = driver->connect("tcp://localhost:3306", "root", "gera123S!");  // логін і пароль до вашої БД
+		conn->setSchema("kursova_schema");  // ваша база даних
+
+		// Перевірка наявності користувача
+		sql::PreparedStatement* checkUserStmt = conn->prepareStatement("SELECT * FROM users WHERE login = ?");
+		checkUserStmt->setString(1, stdUserName);
+		sql::ResultSet* res = checkUserStmt->executeQuery();
+
+		if (res->next()) {
+			MessageBox::Show("Користувач із таким логіном вже існує. Спробуйте інший.", "Помилка реєстрації", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+			// Очищення ресурсів
+			delete res;
+			delete checkUserStmt;
+			delete conn;
+			return;
+		}
+
+		// Якщо користувач не існує, реєструємо нового
+		delete res;
+		delete checkUserStmt;
+
+		// Вставка нового користувача
+		sql::PreparedStatement* insertUserStmt = conn->prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)");
+		insertUserStmt->setString(1, stdUserName);
+		insertUserStmt->setString(2, stdPassword);
+		insertUserStmt->executeUpdate();
+
+		// Підтвердження успішної реєстрації
+		MessageBox::Show("Реєстрація успішна!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+
+
+		// Очищення ресурсів
+		delete insertUserStmt;
+		delete conn;
+	}
+	catch (sql::SQLException& e) {
+		MessageBox::Show("Помилка SQL: " + gcnew String(e.what()), "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
+}
+
+private: System::Void btnLogin_Click(System::Object^ sender, System::EventArgs^ e) {
+	Close();
+}
+private: System::Void lblUserName_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+};
+}
