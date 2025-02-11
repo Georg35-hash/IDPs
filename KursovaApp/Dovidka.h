@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 namespace KursovaApp {
 
@@ -123,7 +123,7 @@ namespace KursovaApp {
 		this->Close();
 	}
 	private: System::Void linkInstruction_LinkClicked(System::Object^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^ e) {
-		System::Diagnostics::Process::Start("C:/Users/Соня/Desktop/KursovaApp1/Інструкція/інструкція.txt");
+		System::Diagnostics::Process::Start("C:\\Users\\Heorhii\\Ew Dropbox\\George Vasiliev\\РџРљ\\Desktop\\IDPs\\KursovaApp\\Instruciton.txt");
 	}
 	private: System::Void lblInfo_Click(System::Object^ sender, System::EventArgs^ e) {
 			}

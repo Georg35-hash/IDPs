@@ -204,7 +204,7 @@ namespace KursovaApp {
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"AddFamilyRelations";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Додати родинний зв\'язок";
+			this->Text = L"Add Family Relation";
 			this->Load += gcnew System::EventHandler(this, &AddFamilyRelations::AddFamilyRelations_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -219,7 +219,7 @@ namespace KursovaApp {
 		sql::ResultSet* res;
 		try {
 			driver = sql::mysql::get_mysql_driver_instance();
-			con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+			con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
 			con->setSchema("kursova_schema");
 
 			// Change query to select VPO IDs alongside last names

@@ -77,10 +77,9 @@ namespace KursovaApp {
 			// 
 			// btnRegister
 			// 
-			this->btnRegister->Location = System::Drawing::Point(210, 175);
-			this->btnRegister->Margin = System::Windows::Forms::Padding(4);
+			this->btnRegister->Location = System::Drawing::Point(158, 142);
 			this->btnRegister->Name = L"btnRegister";
-			this->btnRegister->Size = System::Drawing::Size(159, 28);
+			this->btnRegister->Size = System::Drawing::Size(119, 23);
 			this->btnRegister->TabIndex = 11;
 			this->btnRegister->Text = L"Registration";
 			this->btnRegister->UseVisualStyleBackColor = true;
@@ -88,46 +87,41 @@ namespace KursovaApp {
 			// 
 			// lblUserName
 			// 
-			this->lblUserName->Location = System::Drawing::Point(37, 23);
-			this->lblUserName->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			this->lblUserName->Location = System::Drawing::Point(28, 19);
 			this->lblUserName->Name = L"lblUserName";
-			this->lblUserName->Size = System::Drawing::Size(133, 28);
+			this->lblUserName->Size = System::Drawing::Size(100, 23);
 			this->lblUserName->TabIndex = 6;
 			this->lblUserName->Text = L"Username:";
 			this->lblUserName->Click += gcnew System::EventHandler(this, &RegisterForm::lblUserName_Click);
 			// 
 			// txtUserName
 			// 
-			this->txtUserName->Location = System::Drawing::Point(210, 23);
-			this->txtUserName->Margin = System::Windows::Forms::Padding(4);
+			this->txtUserName->Location = System::Drawing::Point(158, 19);
 			this->txtUserName->Name = L"txtUserName";
-			this->txtUserName->Size = System::Drawing::Size(159, 22);
+			this->txtUserName->Size = System::Drawing::Size(120, 20);
 			this->txtUserName->TabIndex = 7;
 			// 
 			// lblPassword
 			// 
-			this->lblPassword->Location = System::Drawing::Point(37, 72);
-			this->lblPassword->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			this->lblPassword->Location = System::Drawing::Point(28, 58);
 			this->lblPassword->Name = L"lblPassword";
-			this->lblPassword->Size = System::Drawing::Size(133, 28);
+			this->lblPassword->Size = System::Drawing::Size(100, 23);
 			this->lblPassword->TabIndex = 8;
 			this->lblPassword->Text = L"Password:";
 			// 
 			// txtPassword
 			// 
-			this->txtPassword->Location = System::Drawing::Point(210, 72);
-			this->txtPassword->Margin = System::Windows::Forms::Padding(4);
+			this->txtPassword->Location = System::Drawing::Point(158, 58);
 			this->txtPassword->Name = L"txtPassword";
 			this->txtPassword->PasswordChar = '*';
-			this->txtPassword->Size = System::Drawing::Size(159, 22);
+			this->txtPassword->Size = System::Drawing::Size(120, 20);
 			this->txtPassword->TabIndex = 9;
 			// 
 			// btnLogin
 			// 
-			this->btnLogin->Location = System::Drawing::Point(40, 175);
-			this->btnLogin->Margin = System::Windows::Forms::Padding(4);
+			this->btnLogin->Location = System::Drawing::Point(30, 142);
 			this->btnLogin->Name = L"btnLogin";
-			this->btnLogin->Size = System::Drawing::Size(139, 28);
+			this->btnLogin->Size = System::Drawing::Size(104, 23);
 			this->btnLogin->TabIndex = 10;
 			this->btnLogin->Text = L"Back";
 			this->btnLogin->UseVisualStyleBackColor = true;
@@ -135,27 +129,25 @@ namespace KursovaApp {
 			// 
 			// lblConfirmPassword
 			// 
-			this->lblConfirmPassword->Location = System::Drawing::Point(37, 123);
-			this->lblConfirmPassword->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			this->lblConfirmPassword->Location = System::Drawing::Point(28, 100);
 			this->lblConfirmPassword->Name = L"lblConfirmPassword";
-			this->lblConfirmPassword->Size = System::Drawing::Size(133, 28);
+			this->lblConfirmPassword->Size = System::Drawing::Size(100, 23);
 			this->lblConfirmPassword->TabIndex = 12;
 			this->lblConfirmPassword->Text = L"Confirm password:";
 			// 
 			// txtConfirmPassword
 			// 
-			this->txtConfirmPassword->Location = System::Drawing::Point(210, 123);
-			this->txtConfirmPassword->Margin = System::Windows::Forms::Padding(4);
+			this->txtConfirmPassword->Location = System::Drawing::Point(158, 100);
 			this->txtConfirmPassword->Name = L"txtConfirmPassword";
 			this->txtConfirmPassword->PasswordChar = '*';
-			this->txtConfirmPassword->Size = System::Drawing::Size(159, 22);
+			this->txtConfirmPassword->Size = System::Drawing::Size(120, 20);
 			this->txtConfirmPassword->TabIndex = 13;
 			// 
 			// RegisterForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(400, 230);
+			this->ClientSize = System::Drawing::Size(300, 187);
 			this->Controls->Add(this->lblConfirmPassword);
 			this->Controls->Add(this->txtConfirmPassword);
 			this->Controls->Add(this->btnRegister);
@@ -164,9 +156,11 @@ namespace KursovaApp {
 			this->Controls->Add(this->lblPassword);
 			this->Controls->Add(this->txtPassword);
 			this->Controls->Add(this->btnLogin);
+			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->Name = L"RegisterForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"RegisterForm";
+			this->Load += gcnew System::EventHandler(this, &RegisterForm::RegisterForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -180,12 +174,12 @@ private: System::Void btnRegister_Click(System::Object^ sender, System::EventArg
 	String^ confirmPassword = txtConfirmPassword->Text;
 
 	if (userName->Length == 0 || password->Length == 0 || confirmPassword->Length == 0) {
-		MessageBox::Show("Будь ласка, заповніть всі поля", "Помилка реєстрації", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Please fill in all fields", "Registration Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 
 	if (password != confirmPassword) {
-		MessageBox::Show("Паролі не співпадають", "Помилка реєстрації", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Please fill in all fields", "Registration Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 
@@ -199,44 +193,44 @@ private: System::Void btnRegister_Click(System::Object^ sender, System::EventArg
 		sql::Connection* conn;
 
 		driver = sql::mysql::get_mysql_driver_instance();
-		conn = driver->connect("tcp://localhost:3306", "root", "gera123S!");  // логін і пароль до вашої БД
-		conn->setSchema("kursova_schema");  // ваша база даних
+		conn = driver->connect("tcp://localhost:3306", "root", "admin");  
+		conn->setSchema("kursova_schema");  
 
-		// Перевірка наявності користувача
+		
 		sql::PreparedStatement* checkUserStmt = conn->prepareStatement("SELECT * FROM users WHERE login = ?");
 		checkUserStmt->setString(1, stdUserName);
 		sql::ResultSet* res = checkUserStmt->executeQuery();
 
 		if (res->next()) {
-			MessageBox::Show("Користувач із таким логіном вже існує. Спробуйте інший.", "Помилка реєстрації", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			MessageBox::Show("A user with this username already exists. Please try another.", "Registration Error" "Помилка реєстрації", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-			// Очищення ресурсів
+		
 			delete res;
 			delete checkUserStmt;
 			delete conn;
 			return;
 		}
 
-		// Якщо користувач не існує, реєструємо нового
+		
 		delete res;
 		delete checkUserStmt;
 
-		// Вставка нового користувача
+		
 		sql::PreparedStatement* insertUserStmt = conn->prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)");
 		insertUserStmt->setString(1, stdUserName);
 		insertUserStmt->setString(2, stdPassword);
 		insertUserStmt->executeUpdate();
 
-		// Підтвердження успішної реєстрації
-		MessageBox::Show("Реєстрація успішна!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		
+		MessageBox::Show("Registration successful!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 
 
-		// Очищення ресурсів
+		
 		delete insertUserStmt;
 		delete conn;
 	}
 	catch (sql::SQLException& e) {
-		MessageBox::Show("Помилка SQL: " + gcnew String(e.what()), "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Error SQL: " + gcnew String(e.what()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
 }
 
@@ -244,6 +238,8 @@ private: System::Void btnLogin_Click(System::Object^ sender, System::EventArgs^ 
 	Close();
 }
 private: System::Void lblUserName_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void RegisterForm_Load(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

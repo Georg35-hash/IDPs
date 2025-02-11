@@ -341,7 +341,7 @@ namespace KursovaApp {
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"AddVPO";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Додати внутрішньо переміщену особу";
+			this->Text = L"Add Internally Displaced Person";
 			this->Load += gcnew System::EventHandler(this, &AddVPO::AddVPO_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();

@@ -154,30 +154,30 @@ namespace KursovaApp {
 	public:
 		bool authorizeUser(std::string username, std::string password) {
 			try {
-				// Створення драйвера та з'єднання
+			
 				sql::mysql::MySQL_Driver* driver;
 				sql::Connection* con;
 
 				driver = sql::mysql::get_mysql_driver_instance();
-				con = driver->connect("tcp://localhost:3306", "root", "gera123S!");
+				con = driver->connect("tcp://localhost:3306", "root", "admin");
 				con->setSchema("kursova_schema"); 
 
-				// Підготовка запиту
+				
 				sql::PreparedStatement* pstmt = con->prepareStatement("SELECT * FROM users WHERE login = ? AND password = ?");
 				pstmt->setString(1, username);
 				pstmt->setString(2, password);
 
-				// Виконання запиту
+				
 				sql::ResultSet* res = pstmt->executeQuery();
 
 				bool loginSuccessful = false;
 
-				// Перевірка результату
+				
 				if (res->next()) {
-					loginSuccessful = true;  // Авторизація пройшла успішно
+					loginSuccessful = true;  
 				}
 				else {
-					loginSuccessful = false; // Невірні логін або пароль
+					loginSuccessful = false;
 				}
 
 				// Очищення ресурсів
@@ -188,7 +188,7 @@ namespace KursovaApp {
 				return loginSuccessful;
 			}
 			catch (sql::SQLException& e) {
-				// Виведення повідомлення про помилку
+			
 				MessageBox::Show("SQL Error: " + gcnew String(e.what()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				return false;
 			}
@@ -207,7 +207,7 @@ namespace KursovaApp {
 				fm->ShowDialog();
 			}
 			else {
-				MessageBox::Show("Помилка. Невірний логін або пароль.", "Повідомлення про помилку", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				MessageBox::Show("Error. Incorrect username or password.", "Error Message", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
 	private: System::Void btnRegister_Click(System::Object^ sender, System::EventArgs^ e) {

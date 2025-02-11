@@ -335,7 +335,7 @@ private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e
 
 
 private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) {
-	About^ aboutForm = gcnew About();  // Створення нового об'єкта форми About
+	About^ aboutForm = gcnew About();  
 	aboutForm->ShowDialog();  
 }
 

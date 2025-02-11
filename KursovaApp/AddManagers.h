@@ -163,7 +163,7 @@ private: System::Void comboBox1_MouseClick(System::Object^ sender, System::Windo
 	sql::ResultSet* res;
 	try {
 		driver = sql::mysql::get_mysql_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+		con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
 		con->setSchema("kursova_schema");
 
 		// Change query to select VPO IDs alongside last names

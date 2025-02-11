@@ -58,12 +58,13 @@ namespace KursovaApp {
 			this->lblAbout->AutoSize = true;
 			this->lblAbout->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->lblAbout->Location = System::Drawing::Point(52, 43);
+			this->lblAbout->Location = System::Drawing::Point(39, 35);
+			this->lblAbout->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->lblAbout->Name = L"lblAbout";
-			this->lblAbout->Size = System::Drawing::Size(563, 195);
+			this->lblAbout->Size = System::Drawing::Size(416, 124);
 			this->lblAbout->TabIndex = 0;
-			this->lblAbout->Text = L"Контакти служби підтримки: \r\nНомер телефону: +380995286784.\r\nE-mail: geher234@gma"
-				L"il.com\r\n\r\n\r\n";
+			this->lblAbout->Text = L"Support service contacts: \r\nPhone number: +380995286784. \r\nE-mail: geher234@gmail"
+				L".com\r\n\r\n";
 			this->lblAbout->Click += gcnew System::EventHandler(this, &About::lblAbout_Click);
 			// 
 			// buttonOK
@@ -77,26 +78,29 @@ namespace KursovaApp {
 			this->buttonOK->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->buttonOK->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->buttonOK->Location = System::Drawing::Point(235, 241);
+			this->buttonOK->Location = System::Drawing::Point(176, 196);
+			this->buttonOK->Margin = System::Windows::Forms::Padding(2);
 			this->buttonOK->Name = L"buttonOK";
-			this->buttonOK->Size = System::Drawing::Size(175, 38);
+			this->buttonOK->Size = System::Drawing::Size(131, 31);
 			this->buttonOK->TabIndex = 1;
-			this->buttonOK->Text = L"Добре";
+			this->buttonOK->Text = L"OK";
 			this->buttonOK->UseVisualStyleBackColor = true;
 			this->buttonOK->Click += gcnew System::EventHandler(this, &About::buttonOK_Click);
 			// 
 			// About
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(647, 353);
+			this->ClientSize = System::Drawing::Size(485, 287);
 			this->Controls->Add(this->buttonOK);
 			this->Controls->Add(this->lblAbout);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"About";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Про програму";
+			this->Text = L"Information";
+			this->Load += gcnew System::EventHandler(this, &About::About_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -108,7 +112,9 @@ namespace KursovaApp {
 		this->Close();
 	}
 	private: System::Void lblAbout_Click(System::Object^ sender, System::EventArgs^ e) {
-		MessageBox::Show("Ви натиснули на інформацію про програму.");
+		MessageBox::Show("You clicked on the information about the program.");
 	}
-	};
+	private: System::Void About_Load(System::Object^ sender, System::EventArgs^ e) {
+	}
+};
 }

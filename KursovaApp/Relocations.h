@@ -298,7 +298,7 @@ namespace KursovaApp {
 		sql::ResultSet* res;
 		try {
 			driver = sql::mysql::get_mysql_driver_instance();
-			con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+			con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
 			con->setSchema("kursova_schema");
 
 			pstmt = con->prepareStatement("SELECT relocations.id, vpo.last_name as ln, vpo.first_name as fn, vpo.middle_name as mn, relocations.relocation_date as rd, relocations.relocation_region as rr, relocations.relocation_address as ra, relocations.assistance as a, relocations.employment as e, relocations.status as s, managers.full_name as fn FROM relocations INNER JOIN vpo ON relocations.vpo_id = vpo.id INNER JOIN managers ON relocations.manager_id = managers.id");
@@ -323,7 +323,7 @@ namespace KursovaApp {
 			}
 		}
 		catch (sql::SQLException& e) {
-			String^ errorMsg = "Помилка SQL: " + gcnew String(e.what());
+			String^ errorMsg = "Error SQL: " + gcnew String(e.what());
 			errorMsg += "\nError Code: " + e.getErrorCode();
 			MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
@@ -350,7 +350,7 @@ private: System::Void toolStripButton1_Click(System::Object^ sender, System::Eve
 		String::IsNullOrEmpty(relocationRegion) || String::IsNullOrEmpty(relocationAddress) ||
 		String::IsNullOrEmpty(assistance) || String::IsNullOrEmpty(employment) || 
 		String::IsNullOrEmpty(status) || String::IsNullOrEmpty(managerText)) {
-		MessageBox::Show("Будь ласка заповніть всі поля.", "Помилка!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show("Please fill in all fields.", "Error!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -360,7 +360,7 @@ private: System::Void toolStripButton1_Click(System::Object^ sender, System::Eve
 
 	try {
 		driver = sql::mysql::get_mysql_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+		con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
 		con->setSchema("kursova_schema");
 
 		// Extract the VPO ID from the vpoText
@@ -402,7 +402,7 @@ private: System::Void toolStripButton1_Click(System::Object^ sender, System::Eve
 		MessageBox::Show("Family relation added successfully!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}
 	catch (sql::SQLException& e) {
-		String^ errorMsg = "Помилка SQL: " + gcnew String(e.what());
+		String^ errorMsg = "Error SQL: " + gcnew String(e.what());
 		errorMsg += "\nError Code: " + e.getErrorCode();
 		MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
@@ -416,14 +416,14 @@ private: System::Void toolStripButton4_Click(System::Object^ sender, System::Eve
 }
 private: System::Void toolStripButton3_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (dataGridView1->CurrentRow == nullptr || dataGridView1->CurrentRow->Cells[0]->Value == nullptr) {
-		MessageBox::Show("Виберіть рядок для видалення", "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Please select a row to delete", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 
 	try {
 		int recordId = Int32::Parse(dataGridView1->CurrentRow->Cells[0]->Value->ToString());
 		sql::mysql::MySQL_Driver* driver = sql::mysql::get_mysql_driver_instance();
-		std::unique_ptr<sql::Connection> conn(driver->connect("tcp://localhost:3306", "root", "gera123S!"));
+		std::unique_ptr<sql::Connection> conn(driver->connect("tcp://localhost:3306", "root", "admin"));
 		conn->setSchema("kursova_schema");
 
 		std::unique_ptr<sql::PreparedStatement> pstmt(conn->prepareStatement("DELETE FROM relocations WHERE id = ?"));
@@ -432,15 +432,15 @@ private: System::Void toolStripButton3_Click(System::Object^ sender, System::Eve
 		int rowsAffected = pstmt->executeUpdate();
 
 		if (rowsAffected > 0) {
-			MessageBox::Show("Дані успішно видалені!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			MessageBox::Show("Data successfully deleted!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 		else {
-			MessageBox::Show("Запис не знайдено або не було змінено.", "Інформація", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			MessageBox::Show("Record not found or not changed.", "Information", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 
 	}
 	catch (sql::SQLException& e) {
-		String^ errorMsg = "Помилка SQL: " + gcnew String(e.what());
+		String^ errorMsg = "Error SQL: " + gcnew String(e.what());
 		errorMsg += "\nError Code: " + e.getErrorCode();
 		MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
@@ -455,8 +455,8 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 	// Open edit form
 	AddRelocations^ editRelocations = gcnew AddRelocations();
 	this->Hide();
-	editRelocations->button2->Text = "Редагувати";
-	editRelocations->Text = "Редагувати переміщення";
+	editRelocations->button2->Text = "Edit";
+	editRelocations->Text = "Edit Relocation";
 
 	// Get the ID of the record to be edited
 	String^ relocation_id = dataGridView1->CurrentRow->Cells[0]->Value->ToString(); // Assume ID is in the first column
@@ -483,7 +483,7 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 		String::IsNullOrEmpty(relocationRegion) || String::IsNullOrEmpty(relocationAddress) ||
 		String::IsNullOrEmpty(assistance) || String::IsNullOrEmpty(employment) ||
 		String::IsNullOrEmpty(status) || String::IsNullOrEmpty(managerText)) {
-		MessageBox::Show("Будь ласка заповніть всі поля.", "Помилка!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show("Please fill in all fields.", "Error!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -493,7 +493,7 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 
 	try {
 		driver = sql::mysql::get_mysql_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+		con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
 		con->setSchema("kursova_schema");
 
 		// Extract the VPO ID from the vpoText

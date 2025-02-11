@@ -197,7 +197,7 @@ namespace KursovaApp {
 		sql::ResultSet* res;
 		try {
 			driver = sql::mysql::get_mysql_driver_instance();
-			con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+			con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
 			con->setSchema("kursova_schema");
 
 			pstmt = con->prepareStatement("SELECT id, full_name FROM managers");
@@ -213,7 +213,7 @@ namespace KursovaApp {
 			}
 		}
 		catch (sql::SQLException& e) {
-			String^ errorMsg = "Помилка SQL: " + gcnew String(e.what());
+			String^ errorMsg = "Error SQL: " + gcnew String(e.what());
 			errorMsg += "\nError Code: " + e.getErrorCode();
 			MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
@@ -238,7 +238,7 @@ private: System::Void toolStripButton1_Click(System::Object^ sender, System::Eve
 
 	// Validate input fields
 	if (String::IsNullOrEmpty(userText) || String::IsNullOrEmpty(full_name)) {
-		MessageBox::Show("Будь ласка заповніть всі поля.", "Помилка!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show("Please fill in all fields.", "Error!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -248,7 +248,7 @@ private: System::Void toolStripButton1_Click(System::Object^ sender, System::Eve
 
 	try {
 		driver = sql::mysql::get_mysql_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+		con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
 		con->setSchema("kursova_schema");
 
 		// Extract the VPO ID from the vpoText
@@ -271,10 +271,10 @@ private: System::Void toolStripButton1_Click(System::Object^ sender, System::Eve
 		// Execute the insert
 		pstmt->executeUpdate();
 
-		MessageBox::Show("Менеджер успішно добавлений", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		MessageBox::Show("Manager successfully added", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}
 	catch (sql::SQLException& e) {
-		String^ errorMsg = "Помилка SQL: " + gcnew String(e.what());
+		String^ errorMsg = "Error SQL: " + gcnew String(e.what());
 		errorMsg += "\nError Code: " + e.getErrorCode();
 		MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
@@ -285,14 +285,14 @@ private: System::Void toolStripButton1_Click(System::Object^ sender, System::Eve
 }
 private: System::Void toolStripButton3_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (dataGridView1->CurrentRow == nullptr || dataGridView1->CurrentRow->Cells[0]->Value == nullptr) {
-		MessageBox::Show("Виберіть рядок для видалення", "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Please select a row to delete.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 
 	try {
 		int recordId = Int32::Parse(dataGridView1->CurrentRow->Cells[0]->Value->ToString());
 		sql::mysql::MySQL_Driver* driver = sql::mysql::get_mysql_driver_instance();
-		std::unique_ptr<sql::Connection> conn(driver->connect("tcp://localhost:3306", "root", "gera123S!"));
+		std::unique_ptr<sql::Connection> conn(driver->connect("tcp://localhost:3306", "root", "admin"));
 		conn->setSchema("kursova_schema");
 
 		std::unique_ptr<sql::PreparedStatement> pstmt(conn->prepareStatement("DELETE FROM managers WHERE id = ?"));
@@ -301,15 +301,15 @@ private: System::Void toolStripButton3_Click(System::Object^ sender, System::Eve
 		int rowsAffected = pstmt->executeUpdate();
 
 		if (rowsAffected > 0) {
-			MessageBox::Show("Дані успішно видалені!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			MessageBox::Show("Data successfully deleted!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 		else {
-			MessageBox::Show("Запис не знайдено або не було змінено.", "Інформація", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			MessageBox::Show("Manager successfully updated!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 
 	}
 	catch (sql::SQLException& e) {
-		String^ errorMsg = "Помилка SQL: " + gcnew String(e.what());
+		String^ errorMsg = " Error SQL: " + gcnew String(e.what());
 		errorMsg += "\nError Code: " + e.getErrorCode();
 		MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
@@ -317,15 +317,15 @@ private: System::Void toolStripButton3_Click(System::Object^ sender, System::Eve
 private: System::Void toolStripButton2_Click(System::Object^ sender, System::EventArgs^ e) {
 	// Check if a row is selected
 	if (dataGridView1->CurrentRow == nullptr) {
-		MessageBox::Show("Будь ласка виберіть менеджера щоб редагувати.", "Помилка у виборі", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show("Please select a manager to edit.", "Selection Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
 	// Open edit form
 	AddManagers^ editManagers = gcnew AddManagers();
 	this->Hide();
-	editManagers->button2->Text = "Редагувати";
-	editManagers->Text = "Редагувати менеджера";
+	editManagers->button2->Text = "Edit";
+    editManagers->Text = "Edit Manager";
 
 	// Get the ID of the record to be edited
 	String^ manager_id = dataGridView1->CurrentRow->Cells[0]->Value->ToString(); // Assume ID is in the first column
@@ -340,7 +340,7 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 
 	// Validate input fields
 	if (String::IsNullOrEmpty(userText) || String::IsNullOrEmpty(full_name)) {
-		MessageBox::Show("Будь ласка заповніть всі поля.", "Помилка!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show("Please fill in all fields.", "Error!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -350,7 +350,7 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 
 	try {
 		driver = sql::mysql::get_mysql_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+		con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
 		con->setSchema("kursova_schema");
 
 		// Extract the VPO ID from the vpoText
@@ -376,10 +376,10 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 		// Execute the update
 		pstmt->executeUpdate();
 
-		MessageBox::Show("Менеджер успішно оновленй!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		MessageBox::Show("Manager successfully updated!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}
 	catch (sql::SQLException& e) {
-		String^ errorMsg = "Помилка SQL: " + gcnew String(e.what());
+		String^ errorMsg = "Error SQL: " + gcnew String(e.what());
 		errorMsg += "\nError Code: " + e.getErrorCode();
 		MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
@@ -389,7 +389,7 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 	}
 }
 private: System::Void toolStripButton5_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->Close(); // Закриває 
+	this->Close(); 
 }
 private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 }

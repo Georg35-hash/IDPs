@@ -320,7 +320,7 @@ namespace KursovaApp {
 		try {
 			driver = sql::mysql::get_mysql_driver_instance();
 			// Use charset=utf8mb4 in the connection string
-			con = driver->connect("tcp://127.0.0.1:3306?charset=utf8mb4", "root", "gera123S!");
+			con = driver->connect("tcp://127.0.0.1:3306?charset=utf8mb4", "root", "admin");
 			con->setSchema("kursova_schema");
 
 			pstmt = con->prepareStatement("SELECT * FROM vpo");
@@ -374,7 +374,7 @@ namespace KursovaApp {
 				String::IsNullOrEmpty(gender) || String::IsNullOrEmpty(rnokpp) ||
 				String::IsNullOrEmpty(dokument_number) || String::IsNullOrEmpty(region) ||
 				String::IsNullOrEmpty(registration_address)) {
-				MessageBox::Show("Будь ласка заповніть всі поля.", "Помилка!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				MessageBox::Show("Please fill in all fields.", "Error!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 				return;
 			}
 
@@ -392,7 +392,7 @@ namespace KursovaApp {
 
 				// Connect to the database with utf8mb4 character set
 				sql::mysql::MySQL_Driver* driver = sql::mysql::get_mysql_driver_instance();
-				sql::Connection* conn = driver->connect("tcp://127.0.0.1:3306?charset=utf8mb4", "root", "gera123S!");
+				sql::Connection* conn = driver->connect("tcp://127.0.0.1:3306?charset=utf8mb4", "root", "admin");
 				conn->setSchema("kursova_schema");
 
 				// Set UTF-8 encoding for MySQL connection
@@ -416,14 +416,14 @@ namespace KursovaApp {
 
 				// Execute the insert statement
 				insertRefugeeStmt->executeUpdate();
-				MessageBox::Show("Дані успішно додані!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				MessageBox::Show("Data successfully added!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 
 				// Clean up resources
 				delete insertRefugeeStmt;
 				delete conn;
 			}
 			catch (sql::SQLException& e) {
-				String^ errorMsg = "Помилка SQL: " + gcnew String(e.what());
+				String^ errorMsg = "Error SQL: " + gcnew String(e.what());
 				errorMsg += "\nError Code: " + e.getErrorCode();
 				MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
@@ -435,14 +435,14 @@ namespace KursovaApp {
 
 private: System::Void toolStripButton2_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (dataGridView1->CurrentRow == nullptr || dataGridView1->CurrentRow->Cells[0]->Value == nullptr) {
-		MessageBox::Show("Виберіть рядок для редагування", "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Please select a row to edit", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 
 	AddVPO^ addVPO = gcnew AddVPO();
 	this->Hide();
-	addVPO->button2->Text = "Редагувати";
-	addVPO->Text = "Редагувати Внутрішньо переміщену особу";
+	addVPO->button2->Text = "Edit";
+	addVPO->Text = "Edit Internally Displaced Person";
 
 	// Заповнення полів форми
 	addVPO->txtSurname->Text = dataGridView1->CurrentRow->Cells[1]->Value->ToString();
@@ -473,14 +473,14 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 		String::IsNullOrEmpty(gender) || String::IsNullOrEmpty(rnokpp) ||
 		String::IsNullOrEmpty(document_number) || String::IsNullOrEmpty(region) ||
 		String::IsNullOrEmpty(registration_address)) {
-		MessageBox::Show("Будь ласка заповніть всі поля.", "Помилка!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show("Please fill in all fields.", "Error!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
 	try {
 		int recordId = Int32::Parse(dataGridView1->CurrentRow->Cells[0]->Value->ToString());
 		sql::mysql::MySQL_Driver* driver = sql::mysql::get_mysql_driver_instance();
-		std::unique_ptr<sql::Connection> conn(driver->connect("tcp://localhost:3306", "root", "gera123S!"));
+		std::unique_ptr<sql::Connection> conn(driver->connect("tcp://localhost:3306", "root", "admin"));
 		conn->setSchema("kursova_schema");
 
 		std::unique_ptr<sql::PreparedStatement> updateStmt(conn->prepareStatement(
@@ -500,16 +500,16 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 		int rowsAffected = updateStmt->executeUpdate();
 
 		if (rowsAffected > 0) {
-			MessageBox::Show("Дані успішно оновлені!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			MessageBox::Show("Data successfully updated!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 		addVPO->Close();
 		this->Show();
 	}
 	catch (sql::SQLException& e) {
-		MessageBox::Show("Помилка SQL: " + gcnew String(e.what()), "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Error SQL: " + gcnew String(e.what()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
 	catch (Exception^ e) {
-		MessageBox::Show("Загальна помилка: " + e->Message, "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("General error: " + e->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
 }
 
@@ -517,14 +517,14 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 
 private: System::Void toolStripButton3_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (dataGridView1->CurrentRow == nullptr || dataGridView1->CurrentRow->Cells[0]->Value == nullptr) {
-		MessageBox::Show("Виберіть рядок для видалення", "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Please select a row to delete", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 
 	try {
 		int recordId = Int32::Parse(dataGridView1->CurrentRow->Cells[0]->Value->ToString());
 		sql::mysql::MySQL_Driver* driver = sql::mysql::get_mysql_driver_instance();
-		std::unique_ptr<sql::Connection> conn(driver->connect("tcp://localhost:3306", "root", "gera123S!"));
+		std::unique_ptr<sql::Connection> conn(driver->connect("tcp://localhost:3306", "root", "admin"));
 		conn->setSchema("kursova_schema");
 
 		std::unique_ptr<sql::PreparedStatement> pstmt(conn->prepareStatement("DELETE FROM vpo WHERE id = ?"));
@@ -533,10 +533,10 @@ private: System::Void toolStripButton3_Click(System::Object^ sender, System::Eve
 		int rowsAffected = pstmt->executeUpdate();
 
 		if (rowsAffected > 0) {
-			MessageBox::Show("Дані успішно видалені!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			MessageBox::Show("Data successfully deleted!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 		else {
-			MessageBox::Show("Запис не знайдено або не було змінено.", "Інформація", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			MessageBox::Show("Record not found or not changed.", "Information", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 
 	}
@@ -567,10 +567,10 @@ private: System::Void toolStripButton4_Click(System::Object^ sender, System::Eve
 		String^ pdfFilePath = "report.pdf";
 
 		// Створення HTML контенту з правильним кодуванням
-		String^ htmlContent = "<html><head><meta charset='UTF-8'><title>Звіт</title>";
+		String^ htmlContent = "<html><head><meta charset='UTF-8'><title>Report</title>";
 		htmlContent += "<style> body { font-family: Arial, sans-serif; } </style></head><body>";
-		htmlContent += "<h1>Звіт за даними ВПО</h1>";
-		htmlContent += "<table border='1'><tr><th>ID</th><th>Прізвище</th><th>Ім'я</th><th>По батькові</th><th>Дата народження</th><th>Стать</th><th>РНОКПП</th><th>Номер документа</th><th>Регіон</th></tr>";
+		htmlContent += "<h1>Report on IDP Data</h1>";
+		htmlContent += "<table border='1'><tr><th>ID</th><th>Last Name</th><th>First Name</th><th>Middle Name</th><th>Date of Birth</th><th>Gender</th><th>RNOKPP</th><th>Document Number</th><th>Region</th></tr>";
 
 		// Проходимо по кожному рядку в DataGridView і додаємо дані в HTML
 		for (int i = 0; i < dataGridView1->Rows->Count; ++i)
@@ -609,11 +609,11 @@ private: System::Void toolStripButton4_Click(System::Object^ sender, System::Eve
 		// Чекаємо на завершення процесу
 		process->WaitForExit();
 
-		MessageBox::Show("Звіт успішно створено в форматі PDF!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		MessageBox::Show("Report successfully created in PDF format!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("Помилка при створенні звіту: " + ex->Message, "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Error creating report: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
 }
 private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {

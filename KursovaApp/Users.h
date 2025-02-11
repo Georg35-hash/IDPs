@@ -83,10 +83,9 @@ namespace KursovaApp {
 			});
 			this->dataGridView1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->dataGridView1->Location = System::Drawing::Point(0, 0);
-			this->dataGridView1->Margin = System::Windows::Forms::Padding(4);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->RowHeadersWidth = 51;
-			this->dataGridView1->Size = System::Drawing::Size(679, 553);
+			this->dataGridView1->Size = System::Drawing::Size(509, 449);
 			this->dataGridView1->TabIndex = 13;
 			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &Users::dataGridView1_CellContentClick);
 			// 
@@ -106,15 +105,16 @@ namespace KursovaApp {
 			// 
 			// Users
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(679, 553);
+			this->ClientSize = System::Drawing::Size(509, 449);
 			this->Controls->Add(this->dataGridView1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->Name = L"Users";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Користувачі";
+			this->Text = L"Users";
 			this->Load += gcnew System::EventHandler(this, &Users::Users_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
@@ -128,7 +128,7 @@ namespace KursovaApp {
 		sql::ResultSet* res;
 		try {
 			driver = sql::mysql::get_mysql_driver_instance();
-			con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+			con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
 			con->setSchema("kursova_schema");
 
 			pstmt = con->prepareStatement("SELECT id, login FROM users");

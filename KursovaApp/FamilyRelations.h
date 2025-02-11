@@ -281,7 +281,7 @@ namespace KursovaApp {
 		sql::ResultSet* res;
 		try {
 			driver = sql::mysql::get_mysql_driver_instance();
-			con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+			con = driver->connect("tcp://127.0.0.1:3306", "root", "admin!");
 			con->setSchema("kursova_schema");
 
 			pstmt = con->prepareStatement("SELECT family_relations.id, vpo.last_name as ln, vpo.first_name as fn, vpo.middle_name as mn, family_relations.relation_name as rn, family_relations.relation_type as rt, family_relations.relation_document as rd FROM family_relations INNER JOIN vpo ON family_relations.vpo = vpo.id");
@@ -326,7 +326,7 @@ private: System::Void toolStripButton1_Click(System::Object^ sender, System::Eve
 	// Validate input fields
 	if (String::IsNullOrEmpty(vpoText) || String::IsNullOrEmpty(relation_name) ||
 		String::IsNullOrEmpty(relation_type) || String::IsNullOrEmpty(relation_document)) {
-		MessageBox::Show("Будь ласка заповніть всі поля.", "Помилка!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show("Please fill in all fields.", "Error!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -336,7 +336,7 @@ private: System::Void toolStripButton1_Click(System::Object^ sender, System::Eve
 
 	try {
 		driver = sql::mysql::get_mysql_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+		con = driver->connect("tcp://127.0.0.1:3306", "root", "admin!");
 		con->setSchema("kursova_schema");
 
 		// Extract the VPO ID from the vpoText
@@ -358,10 +358,10 @@ private: System::Void toolStripButton1_Click(System::Object^ sender, System::Eve
 		// Execute the insert
 		pstmt->executeUpdate();
 
-		MessageBox::Show("Дані успішно додані!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		MessageBox::Show("Data successfully added!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}
 	catch (sql::SQLException& e) {
-		String^ errorMsg = "Помилка SQL: " + gcnew String(e.what());
+		String^ errorMsg = "Error SQL: " + gcnew String(e.what());
 		errorMsg += "\nError Code: " + e.getErrorCode();
 		MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
@@ -386,14 +386,14 @@ private: System::Void toolStripButton4_Click(System::Object^ sender, System::Eve
 }
 private: System::Void toolStripButton3_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (dataGridView1->CurrentRow == nullptr || dataGridView1->CurrentRow->Cells[0]->Value == nullptr) {
-		MessageBox::Show("Виберіть рядок для видалення", "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Please select a row to delete.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 
 	try {
 		int recordId = Int32::Parse(dataGridView1->CurrentRow->Cells[0]->Value->ToString());
 		sql::mysql::MySQL_Driver* driver = sql::mysql::get_mysql_driver_instance();
-		std::unique_ptr<sql::Connection> conn(driver->connect("tcp://localhost:3306", "root", "gera123S!"));
+		std::unique_ptr<sql::Connection> conn(driver->connect("tcp://localhost:3306", "root", "admin"));
 		conn->setSchema("kursova_schema");
 
 		std::unique_ptr<sql::PreparedStatement> pstmt(conn->prepareStatement("DELETE FROM family_relations WHERE id = ?"));
@@ -402,15 +402,15 @@ private: System::Void toolStripButton3_Click(System::Object^ sender, System::Eve
 		int rowsAffected = pstmt->executeUpdate();
 
 		if (rowsAffected > 0) {
-			MessageBox::Show("Дані успішно видалені!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			MessageBox::Show("Data successfully deleted!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 		else {
-			MessageBox::Show("Запис не знайдено або не було змінено.", "Інформація", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			MessageBox::Show("Record not found or not changed.", "Information", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 
 	}
 	catch (sql::SQLException& e) {
-		String^ errorMsg = "Помилка SQL: " + gcnew String(e.what());
+		String^ errorMsg = "Error SQL: " + gcnew String(e.what());
 		errorMsg += "\nError Code: " + e.getErrorCode();
 		MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
@@ -418,15 +418,15 @@ private: System::Void toolStripButton3_Click(System::Object^ sender, System::Eve
 private: System::Void toolStripButton2_Click(System::Object^ sender, System::EventArgs^ e) {
 	// Check if a row is selected
 	if (dataGridView1->CurrentRow == nullptr) {
-		MessageBox::Show("Виберіть рядок для редагування!", "Помилка!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show("Please select a row to edit!", "Error!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
 	// Open edit form
 	AddFamilyRelations^ editFamilyRelations = gcnew AddFamilyRelations();
 	this->Hide();
-	editFamilyRelations->button2->Text = "Редагувати";
-	editFamilyRelations->Text = "Редагувати родинний зв'язок";
+	editFamilyRelations->button2->Text = "Edit";
+	editFamilyRelations->Text = "Edit Family Relation";
 
 	// Get the ID of the record to be edited
 	String^ relation_id = dataGridView1->CurrentRow->Cells[0]->Value->ToString(); // Assume ID is in the first column
@@ -446,7 +446,7 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 	// Validate input fields
 	if (String::IsNullOrEmpty(vpoText) || String::IsNullOrEmpty(relation_name) ||
 		String::IsNullOrEmpty(relation_type) || String::IsNullOrEmpty(relation_document)) {
-		MessageBox::Show("Будь ласка заповніть всі поля.", "Помилка!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show("Please fill in all fields.", "Error!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
 
@@ -456,7 +456,7 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 
 	try {
 		driver = sql::mysql::get_mysql_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "gera123S!");
+		con = driver->connect("tcp://127.0.0.1:3306", "root", "admin!");
 		con->setSchema("kursova_schema");
 
 		// Extract the VPO ID from the vpoText
@@ -484,10 +484,10 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 		// Execute the update
 		pstmt->executeUpdate();
 
-		MessageBox::Show("Дані успішно оновлені!", "Успіх", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		MessageBox::Show("Data successfully updated!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}
 	catch (sql::SQLException& e) {
-		String^ errorMsg = "Помилка SQL: " + gcnew String(e.what());
+		String^ errorMsg = "Error SQL: " + gcnew String(e.what());
 		errorMsg += "\nError Code: " + e.getErrorCode();
 		MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
