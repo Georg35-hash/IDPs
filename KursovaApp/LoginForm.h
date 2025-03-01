@@ -180,7 +180,7 @@ namespace KursovaApp {
 					loginSuccessful = false;
 				}
 
-				// ќчищенн€ ресурс≥в
+			
 				delete res;
 				delete pstmt;
 				delete con;
@@ -200,7 +200,7 @@ namespace KursovaApp {
 			std::string password = msclr::interop::marshal_as<std::string>(this->txtPassword->Text);
 
 			if (authorizeUser(username, password)) {
-				MessageBox::Show("¬х≥д усп≥шний!", "”сп≥х", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				MessageBox::Show("Login successful!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 				this->Hide();
 				MainForm^ fm = gcnew MainForm();
 				fm->textBox1->Text = txtUserName->Text;
