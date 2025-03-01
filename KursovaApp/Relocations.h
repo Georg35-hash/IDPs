@@ -539,7 +539,7 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 		MessageBox::Show("Family relation updated successfully!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}
 	catch (sql::SQLException& e) {
-		String^ errorMsg = "Ïîìèëêà SQL: " + gcnew String(e.what());
+		String^ errorMsg = "Error SQL: " + gcnew String(e.what());
 		errorMsg += "\nError Code: " + e.getErrorCode();
 		MessageBox::Show(errorMsg, "Database Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
@@ -549,7 +549,7 @@ private: System::Void toolStripButton2_Click(System::Object^ sender, System::Eve
 	}
 }
 private: System::Void toolStripButton6_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->Close(); // Çàêðèâàº Relocation.h
+	this->Close(); // Ã‡Ã ÃªÃ°Ã¨Ã¢Ã Âº Relocation.h
 }
 };
 }
